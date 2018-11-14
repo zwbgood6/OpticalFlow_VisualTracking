@@ -27,4 +27,5 @@ def estimateAllTranslation(startXs,startYs,img1,img2)
             newXs[i,j] = newX
             newYs[i,j] = newY
             
-    return newXs, newYs
+    return newXs, newYsestimateAllTranslation.py
+estimateAllTranslation.py
