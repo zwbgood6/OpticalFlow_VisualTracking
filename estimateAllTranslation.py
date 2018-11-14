@@ -15,7 +15,7 @@ def estimateAllTranslation(startXs,startYs,img1,img2)
     Ix = signal.convolve(img1, dx, mode='same')
     Iy = signal.convolve(img1, dy, mode='same')
     
-    N, F = startXs.shape()
+    N, F = startXs.shape
     newXs = np.zeros([N,F], dtype=np.int)
     newYs = np.zeros([N,F], dtype=np.int)
     
