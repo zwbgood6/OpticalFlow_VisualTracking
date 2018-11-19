@@ -39,8 +39,8 @@ def applyGeometricTransformation(startXs, startYs, newXs, newYs, bbox):
     correspondPointDistantThreshold = 4
     
     # Delete feature points whose distances are less than threshold 
-    for i in range(F):
-        for j in range(N):
+    for j in range(F):
+        for i in range(N):
             if matrixDistance[i][j] < correspondPointDistantThreshold:
                 Xs[i][count] = newXs[i][j]
                 Ys[i][count] = newYs[i][j]
