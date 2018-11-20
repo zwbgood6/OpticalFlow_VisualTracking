@@ -20,7 +20,7 @@ def objectTracking(rawVideo)
     # bbox[0,:,1] = [455, 455, 515, 515]
 
     # Read in original video
-    cap = cv2.VideoCapture('Easy.mp4')
+    cap = rawVideo
     frame_width  = int(cap.get(3))
     frame_height = int(cap.get(4))
     frame_num    = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -73,6 +73,9 @@ def objectTracking(rawVideo)
         else:
             break
 
-            
-
+if __name__ = "__main__":
+    rawVideo = cv2.VideoCapture('Easy.mp4')
+    objectTracking(rawVideo)
+    
+    
     return out
