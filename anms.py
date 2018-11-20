@@ -32,8 +32,5 @@ def anms(cimg, max_pts):
     X = X[order][0:max_pts]
     Y = Y[order][0:max_pts]
     
-    # Reshape x, y
-    x = X.reshape([-1,1])
-    y = Y.reshape([-1,1])
     
-    return x, y
+    return X, Y

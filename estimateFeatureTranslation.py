@@ -5,30 +5,32 @@ from scipy import interpolate
 def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
     # (INPUT) startX: Represents the starting X coordinate
     # (INPUT) startY: Represents the starting Y coordinate
-    
     # (OUTPUT) newX: Represents the new X coordinate
     # (OUTPUT) newY: Represents the new Y coordinate
     
-    h, w = img1.shape
+    #
+    h, w = img1.shape[0:2]
+    I1 = cv2.cvtColor(img1, cv2.COLOR_RGB2GRAY)
+    I2 = cv2.cvtColor(img2, cv2.COLOR_RGB2GRAY)
     
     # initial displacement and maximum iterations
     u = 0
     v = 0
-    k = 20
+    k = 500
     
     # initial feature point location in img2
     newX = startX + u
     newY = startY + v
     
     # interpolate version of img1, img2, Ix, Iy
-    I1p = interpolate.interp2d(np.arange(w), np.arange(h), img1, kind='linear')
-    I2p = interpolate.interp2d(np.arange(w), np.arange(h), img2, kind='linear')
+    I1p = interpolate.interp2d(np.arange(w), np.arange(h), I1, kind='linear')
+    I2p = interpolate.interp2d(np.arange(w), np.arange(h), I2, kind='linear')
     Ixp = interpolate.interp2d(np.arange(w), np.arange(h), Ix, kind='linear')
     Iyp = interpolate.interp2d(np.arange(w), np.arange(h), Iy, kind='linear')
     
     # points within 9*9 windows around startX and startY
-    x1 = np.arange(startX-4, startX+5)
-    y1 = np.arange(startY-4, startY+5)
+    x1 = np.arange(startX-5, startX+6)
+    y1 = np.arange(startY-5, startY+6)
     xx1, yy1 = np.meshgrid(x1, y1)
     ind_1 = np.stack([xx1,yy1], 2)
     ind_1 = ind_1.reshape((-1,2))
@@ -42,12 +44,12 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
     A = np.array([[sumIxIx, sumIxIy], 
                   [sumIxIy, sumIyIy]])
     
-    # optical flow
+    # optical flow 
     for i in range(k):
         # points within 9*9 windows around newX and newY;
         # newX and newY change in each iteration so window need to be recalculated
-        x2 = np.arange(newX-4, newX+5)
-        y2 = np.arange(newY-4, newY+5)
+        x2 = np.arange(newX-5, newX+6)
+        y2 = np.arange(newY-5, newY+6)
         xx2, yy2 = np.meshgrid(x2, y2)
         ind_2 = np.stack([xx2,yy2], 2)
         ind_2 = ind_2.reshape((-1,2))
@@ -69,10 +71,9 @@ def estimateFeatureTranslation(startX, startY, Ix, Iy, img1, img2):
         # update newX and newY
         newX = newX + u
         newY = newY + v
-
+        
         # check if [u,v] have already converge
         if abs(u)<0.1 and abs(v)<0.1:
             break;
-        
     
     return newX, newY
