@@ -4,3 +4,6 @@ Course: [CIS581](https://alliance.seas.upenn.edu/~cis581/wiki/index.php?title=CI
 
 Author: Yufu Wang, Wenbo Zhang, Rui Li
 
+Question: CIS581Project3PartB.pdf
+
+
